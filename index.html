@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - โรงเรียนพิษณุโลกปัญญานุกูล</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+        
+        * { 
+            font-family: 'Kanit', sans-serif; 
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.7;
+            animation: blob 10s infinite;
+        }
+        
+        @keyframes blob {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        .pulse-icon {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center">
+
+    <!-- Background Animation -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="blob absolute top-0 left-0 w-96 h-96 bg-purple-400"></div>
+        <div class="blob absolute bottom-0 right-0 w-96 h-96 bg-blue-400" style="animation-delay: 3s;"></div>
+        <div class="blob absolute top-1/2 left-1/2 w-96 h-96 bg-pink-400" style="animation-delay: 6s;"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="relative z-10 w-full max-w-md mx-4">
+        <div class="glass rounded-3xl shadow-2xl overflow-hidden">
+            
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-6 text-white text-center">
+                <div class="inline-block mb-3 float-animation">
+                    <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mx-auto">
+                        <i class="fas fa-school text-4xl"></i>
+                    </div>
+                </div>
+                <h1 class="text-2xl font-bold mb-1">โรงเรียนพิษณุโลกปัญญานุกูล</h1>
+                <p class="text-purple-100 text-sm">ระบบจัดการเอกสารออนไลน์</p>
+            </div>
+            
+            <!-- Login Form -->
+            <div class="p-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">
+                    <i class="fas fa-lock text-purple-600 mr-2"></i>เข้าสู่ระบบ
+                </h2>
+                
+                <!-- Department Selection -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-building mr-1"></i>เลือกฝ่ายงาน
+                    </label>
+                    <select id="department" class="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition">
+                        <option value="">-- เลือกฝ่ายงาน --</option>
+                        <option value="hr">กลุ่มบริหารงานบุคคล</option>
+                        <option value="budget">กลุ่มแผนงานและงบประมาณ</option>
+                        <option value="academic">กลุ่มบริหารงานวิชาการ</option>
+                        <option value="general">กลุ่มบริหารงานทั่วไป</option>
+                        <option value="admin">ผู้ดูแลระบบ (Admin)</option>
+                    </select>
+                </div>
+                
+                <!-- Username -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user mr-1"></i>ชื่อผู้ใช้
+                    </label>
+                    <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้" 
+                           class="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition">
+                </div>
+                
+                <!-- Password -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-key mr-1"></i>รหัสผ่าน
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="password" placeholder="กรอกรหัสผ่าน" 
+                               class="w-full p-3 pr-10 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition">
+                        <button onclick="togglePassword()" class="absolute right-3 top-3.5 text-gray-400 hover:text-gray-600">
+                            <i id="eye-icon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Remember Me -->
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="remember" class="mr-2 rounded">
+                        <span class="text-sm text-gray-600">จดจำการเข้าสู่ระบบ</span>
+                    </label>
+                    <a href="#" onclick="showForgotPassword()" class="text-sm text-purple-600 hover:text-purple-700">
+                        ลืมรหัสผ่าน?
+                    </a>
+                </div>
+                
+                <!-- Login Button -->
+                <button onclick="attemptLogin()" 
+                        class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-xl hover:shadow-lg transition-all font-medium">
+                    <i class="fas fa-sign-in-alt mr-2"></i>เข้าสู่ระบบ
+                </button>
+                
+                <!-- Status Message -->
+                <div id="status-message" class="hidden mt-4 p-3 rounded-lg text-sm"></div>
+                
+                <!-- Help Section -->
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <div class="text-center text-sm text-gray-600">
+                        <p class="mb-2">ต้องการความช่วยเหลือ?</p>
+                        <div class="flex justify-center gap-4">
+                            <a href="#" onclick="showHelp()" class="text-purple-600 hover:text-purple-700">
+                                <i class="fas fa-question-circle mr-1"></i>วิธีใช้งาน
+                            </a>
+                            <a href="tel:0956395477" class="text-purple-600 hover:text-purple-700">
+                                <i class="fas fa-phone mr-1"></i>งานโสตฯ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="bg-gray-50 px-8 py-4 text-center">
+                <p class="text-xs text-gray-500">
+                    <i class="fas fa-shield-alt mr-1 text-green-500"></i>
+                    ระบบมีความปลอดภัย ข้อมูลถูกเข้ารหัส
+                </p>
+            </div>
+        </div>
+        
+        <!-- Quick Access Info -->
+        <div class="mt-4 glass rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-gray-700 mb-2">
+                <i class="fas fa-info-circle text-blue-600 mr-1"></i>
+                รหัสผ่านสำหรับแต่ละฝ่าย:
+            </h3>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="bg-purple-50 p-2 rounded">
+                    <strong>บุคคล:</strong> hr2024
+                </div>
+                <div class="bg-green-50 p-2 rounded">
+                    <strong>งบประมาณ:</strong> budget2024
+                </div>
+                <div class="bg-blue-50 p-2 rounded">
+                    <strong>วิชาการ:</strong> academic2024
+                </div>
+                <div class="bg-orange-50 p-2 rounded">
+                    <strong>ทั่วไป:</strong> general2024
+                </div>
+            </div>
+            <div class="mt-2 bg-red-50 p-2 rounded text-xs">
+                <strong>Admin:</strong> admin / plpanya@2024
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===============================================
+        // ข้อมูลผู้ใช้และรหัสผ่าน (ในระบบจริงควรเก็บในฐานข้อมูล)
+        // ===============================================
+        const USERS = {
+            hr: {
+                users: ['hr', 'humanresource', 'บุคคล'],
+                password: 'hr2024',
+                link: 'https://home.mycloud.com/action/share/415a910f-f8af-4f42-a182-01f11a40fd06',
+                name: 'กลุ่มบริหารงานบุคคล'
+            },
+            budget: {
+                users: ['budget', 'plan', 'งบประมาณ'],
+                password: 'budget2024',
+                link: 'https://home.mycloud.com/action/share/b91896dc-2385-44ad-9a4d-a8beeb9cd717',
+                name: 'กลุ่มแผนงานและงบประมาณ'
+            },
+            academic: {
+                users: ['academic', 'วิชาการ'],
+                password: 'academic2024',
+                link: 'https://home.mycloud.com/action/share/69aa0c0e-dd0a-45d1-86e3-83d62d3e3784',
+                name: 'กลุ่มบริหารงานวิชาการ'
+            },
+            general: {
+                users: ['general', 'ทั่วไป'],
+                password: 'general2024',
+                link: 'https://home.mycloud.com/action/share/0d00ff49-23da-4c92-aad3-f22428111f9e',
+                name: 'กลุ่มบริหารงานทั่วไป'
+            },
+            admin: {
+                users: ['admin', 'administrator', 'root'],
+                password: 'plpanya@2024',
+                link: 'portal.html', // ลิงก์ไปยังหน้าหลักของพอร์ทัล
+                name: 'ผู้ดูแลระบบ'
+            }
+        };
+        
+        // ===============================================
+        // Functions
+        // ===============================================
+        
+        // Toggle Password Visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'fas fa-eye';
+            }
+        }
+        
+        // Show Status Message
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.className = 'mt-4 p-3 rounded-lg text-sm flex items-center';
+            
+            if (type === 'success') {
+                statusDiv.className += ' bg-green-100 text-green-700';
+                statusDiv.innerHTML = '<i class="fas fa-check-circle mr-2"></i>' + message;
+            } else if (type === 'error') {
+                statusDiv.className += ' bg-red-100 text-red-700';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i>' + message;
+            } else {
+                statusDiv.className += ' bg-blue-100 text-blue-700';
+                statusDiv.innerHTML = '<i class="fas fa-info-circle mr-2"></i>' + message;
+            }
+            
+            statusDiv.classList.remove('hidden');
+        }
+        
+        // Attempt Login
+        function attemptLogin() {
+            const department = document.getElementById('department').value;
+            const username = document.getElementById('username').value.toLowerCase();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            // Validation
+            if (!department) {
+                showStatus('กรุณาเลือกฝ่ายงาน', 'error');
+                return;
+            }
+            
+            if (!username) {
+                showStatus('กรุณากรอกชื่อผู้ใช้', 'error');
+                return;
+            }
+            
+            if (!password) {
+                showStatus('กรุณากรอกรหัสผ่าน', 'error');
+                return;
+            }
+            
+            // Check Credentials
+            const deptData = USERS[department];
+            
+            if (deptData) {
+                const validUser = deptData.users.includes(username);
+                const validPassword = password === deptData.password;
+                
+                if (validUser && validPassword) {
+                    showStatus('เข้าสู่ระบบสำเร็จ! กำลังเปิดระบบ...', 'success');
+                    
+                    // Save to localStorage if remember is checked
+                    if (remember) {
+                        localStorage.setItem('plp_department', department);
+                        localStorage.setItem('plp_username', username);
+                    }
+                    
+                    // Redirect after 1.5 seconds
+                    setTimeout(() => {
+                        if (department === 'admin') {
+                            // ในระบบจริง ให้ redirect ไปยังหน้า portal.html
+                            alert('เข้าสู่ระบบ Admin สำเร็จ!\n\nในระบบจริง จะ redirect ไปยังหน้าจัดการพอร์ทัล');
+                            // window.location.href = deptData.link;
+                        } else {
+                            window.open(deptData.link, '_blank');
+                            showStatus('เปิดระบบ MyCloud สำเร็จ', 'success');
+                        }
+                    }, 1500);
+                } else {
+                    showStatus('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง', 'error');
+                    // Add shake animation
+                    document.getElementById('password').classList.add('animate-pulse');
+                    setTimeout(() => {
+                        document.getElementById('password').classList.remove('animate-pulse');
+                    }, 1000);
+                }
+            }
+        }
+        
+        // Show Forgot Password
+        function showForgotPassword() {
+            alert('ติดต่องานโสตฯ เพื่อขอรหัสผ่านใหม่\n\nโทร: 095-639-5477 (นายปัชชา)\nโทร: 099-114-4242 (นางสาวปาริฉัตร)\n\nเวลาทำการ: จันทร์-ศุกร์ 08:00-16:30 น.');
+        }
+        
+        // Show Help
+        function showHelp() {
+            alert('วิธีใช้งาน:\n\n1. เลือกฝ่ายงานที่ต้องการเข้าใช้\n2. กรอกชื่อผู้ใช้ตามฝ่ายงาน:\n   - บุคคล: hr\n   - งบประมาณ: budget\n   - วิชาการ: academic\n   - ทั่วไป: general\n   - Admin: admin\n3. กรอกรหัสผ่านตามฝ่าย\n4. คลิกปุ่มเข้าสู่ระบบ\n\nหากมีปัญหา ติดต่องานโสตฯ');
+        }
+        
+        // Auto-fill from localStorage
+        window.onload = function() {
+            const savedDept = localStorage.getItem('plp_department');
+            const savedUser = localStorage.getItem('plp_username');
+            
+            if (savedDept) {
+                document.getElementById('department').value = savedDept;
+            }
+            
+            if (savedUser) {
+                document.getElementById('username').value = savedUser;
+                document.getElementById('remember').checked = true;
+            }
+            
+            // Enter key to login
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
+                }
+            });
+        }
+        
+        // Clear form on department change
+        document.getElementById('department').addEventListener('change', function() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.classList.add('hidden');
+        });
+        
+        // Console Easter Egg
+        console.log('%c🎓 โรงเรียนพิษณุโลกปัญญานุกูล', 'font-size: 20px; color: #667eea; font-weight: bold;');
+        console.log('%c📚 ระบบจัดการเอกสารออนไลน์ v1.0', 'color: #764ba2;');
+        console.log('%c💻 พัฒนาโดย: งานโสตฯ', 'color: #059669;');
+        console.log('\n%c⚠️ คำเตือน:', 'color: red; font-weight: bold;');
+        console.log('หน้านี้มีไว้สำหรับนักพัฒนาเท่านั้น หากมีผู้ใดแนะนำให้คุณคัดลอกและวางสิ่งใดๆ ที่นี่\nเพื่อเปิดใช้งานคุณสมบัติหรือ "แฮก" บัญชีของผู้อื่น นั่นคือการหลอกลวง\nการดำเนินการดังกล่าวจะทำให้ผู้โจมตีสามารถเข้าถึงบัญชีของคุณได้');
+    </script>
+
+</body>
+</html>
